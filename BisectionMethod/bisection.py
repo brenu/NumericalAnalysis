@@ -1,43 +1,49 @@
-import parser
-import random
-import re
+from sympy import *
 
-userInput = input("Insert the function: ")
-a = float(input("Insert the interval's element A (positive): "))
-b = float(input("Insert the interval's element B (negative): "))
+def main():
+    inputFile = open('input.txt', 'r') 
 
-while not re.match("^[A-Za-z0-9 \+\-\*\(\)\%\/]*$", userInput):
-    print("[*] Only mathematical expressions are accepted.")
-    userInput = input("Insert the function: ")
-    a = float(input("Insert the interval's element A (positive): "))
-    b = float(input("Insert the interval's element B (negative): "))
-else:
-    evaluatedExpression = parser.expr(userInput).compile()
+    outputFile = open('result.txt', 'w')
+    outputFile.write("Results considering ε = 10⁻²\n\n\n")
+    outputFile.close()
 
-    expressionZero = 0
-    temporaryX = 1
-    attempts = 0
+    for index, line in enumerate(inputFile):
+        items = line.split(",")
+        a = float(items[1])
+        b = float(items[2])
+        x = Symbol('x') 
 
-    print("\n")
+        evaluatedExpression = lambdify(x, parse_expr(items[0]))
 
-    while eval(evaluatedExpression, {'x': temporaryX, 'X': temporaryX}) > 0.01 or eval(evaluatedExpression, {'x': temporaryX, 'X': temporaryX}) < 0.01:
-        attempts = attempts + 1
-        if attempts <= 10000:
-            temporaryX = (a + b) / 2
-            result = eval(evaluatedExpression, {'x': temporaryX, 'X': temporaryX})
+        expressionZero = 0
+        temporaryX = 1
+        attempts = 0
 
-            print("Testing x={} => result: {}".format(temporaryX, result))
+        while evaluatedExpression(temporaryX) >= 0.01 or evaluatedExpression(temporaryX) <= -0.01:
+            attempts = attempts + 1
+            if attempts <= 10000:
+                temporaryX = (a + b) / 2
+                result = evaluatedExpression(temporaryX)
 
-            if result < -0.01:
-                b = temporaryX
-            elif result > 0.01:
-                a = temporaryX
+                if result <= -0.01  or result >= 0.01:
+                    if result*evaluatedExpression(a) < 0:
+                        b = temporaryX
+                    else:
+                        a = temporaryX
+                else:
+                    outputFile = open('result.txt', 'a')
+                    outputFile.write("-------------------- Equation {} --------------------\n".format(index))
+                    outputFile.write("Considering the interval [{}, {}]\n".format(float(items[1]), float(items[2])))
+                    outputFile.write("{} => {}\n\n\n".format(items[0], temporaryX))
+                    outputFile.close()
+                    break
             else:
-                expressionZero = temporaryX
-                print("\n\nThe function's zero, considering a deviation of 10⁻², is: ", expressionZero)
+                outputFile = open('result.txt', 'a')
+                outputFile.write("-------------------- Equation {} --------------------\n".format(index))
+                outputFile.write("Considering the interval [{}, {}]\n".format(float(items[1]), float(items[2])))
+                outputFile.write("{} => Unable to find approximate root, last was {} => {}\n\n\n".format(items[0], temporaryX, evaluatedExpression(temporaryX)))
+                outputFile.close()
                 break
-        else:
-            print("\n\nSorry, we couldn't find any root for this expression :(")
-            break
     
-    
+main()
+print("Done. See the results on result.txt")
