@@ -1,0 +1,22 @@
+[*] Each line of it consists of n+2 columns, which have:
+
+n,n*matrixLines,b
+
+[*] n representing the matrix order
+[*] n*matrixLines representing the n lines of the matrix, which have to be presented
+    with all the columns separate by space, just like this:
+
+    1 0 0
+
+[*] b representing the extension of the matrix, which also have to be presented
+    with all the columns separate by space
+
+[*] ----- INPUT EXAMPLE -----
+
+    3,1 0 0,0 1 0,0 0 1,0 0 0
+
+    Which represents the following extended matrix:
+
+    1 0 0 | 0
+    0 1 0 | 0
+    0 0 1 | 0

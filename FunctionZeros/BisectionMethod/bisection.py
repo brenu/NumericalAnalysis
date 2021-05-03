@@ -15,17 +15,15 @@ def main():
 
         evaluatedExpression = lambdify(x, parse_expr(items[0]))
 
-        expressionZero = 0
-        temporaryX = 1
         attempts = 0
 
-        while evaluatedExpression(temporaryX) >= 0.01 or evaluatedExpression(temporaryX) <= -0.01:
+        while True:
             attempts = attempts + 1
             if attempts <= 10000:
                 temporaryX = (a + b) / 2
                 result = evaluatedExpression(temporaryX)
 
-                if result <= -0.01  or result >= 0.01:
+                if result <= -0.0001  or result >= 0.0001:
                     if result*evaluatedExpression(a) < 0:
                         b = temporaryX
                     else:

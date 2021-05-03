@@ -14,13 +14,12 @@ def main():
         x = Symbol('x') 
 
         evaluatedExpression = lambdify(x, parse_expr(items[0]))
-
-        expressionZero = 0
-        temporaryX = 1
+        
         attempts = 0
 
-        while evaluatedExpression(temporaryX) >= 0.01 or evaluatedExpression(temporaryX) <= -0.01:
+        while True:
             attempts = attempts + 1
+
             if attempts <= 10000:
                 fa = evaluatedExpression(a)
                 fb = evaluatedExpression(b)
@@ -28,6 +27,7 @@ def main():
                 result = evaluatedExpression(temporaryX)
 
                 if result <= -0.01  or result >= 0.01:
+
                     if result*fa < 0:
                         b = temporaryX
                     else:

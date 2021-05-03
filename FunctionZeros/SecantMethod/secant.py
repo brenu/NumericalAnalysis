@@ -40,7 +40,7 @@ def main():
             attempts = attempts + 1
             result = expression(temporaryX)
 
-            if result >= -0.01 and result <= 0.01:
+            if result > -0.01 and result < 0.01:
                 outputFile = open('result.txt', 'a')
                 outputFile.write("-------------------- Equation {} --------------------\n".format(index))
                 outputFile.write("Considering the interval [{}, {}]\n".format(float(items[1]), float(items[2])))

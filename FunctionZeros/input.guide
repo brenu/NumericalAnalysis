@@ -1,0 +1,6 @@
+[*] Each line of it consists of three columns, which have:
+
+f(x),a,b
+
+[*] f(x) representing the function (it HAS to be in the python operations format)
+[*] a,b representing the interval where you'd like to verify
