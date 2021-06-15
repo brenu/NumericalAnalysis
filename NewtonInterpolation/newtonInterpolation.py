@@ -56,8 +56,6 @@ def main():
         xValues = []
         yValues = []
         predictedValues = []
-        
-        print(polynome(1730), polynome(3200))
 
         for i in range(len(points)):
             xValues.append(points[i][0])
