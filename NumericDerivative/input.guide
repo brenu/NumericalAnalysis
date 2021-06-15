@@ -1,0 +1,20 @@
+[*] Each line of it consists of an expression (it has to follow python syntax):
+
+x**2+2*x+1
+
+[*] The X value you want to look for the derivative of:
+
+e.g.: 1
+
+[*] A value for the function delta (or epsilon):
+
+e.g.: 0.01
+
+[*] And the specification of the derivative order:
+
+e.g.: 1 (first order)
+      2 (second order)
+
+[*] ----- INPUT EXAMPLE -----
+
+x**2+2*x+1;0;0.001;2
