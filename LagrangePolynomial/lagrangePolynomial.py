@@ -1,9 +1,12 @@
-from scipy.interpolate import make_interp_spline, BSpline
-from sympy import lambdify, Symbol, parse_expr
+from scipy.interpolate import make_interp_spline
+from sympy import lambdify, Symbol, parse_expr, simplify
 import numpy as np
 import matplotlib.pyplot as plt
 import re
 import copy
+
+outputFile = open("result.txt", "w")
+outputFile.close()
 
 def main():
     inputFile = open("input.txt", "r")
@@ -34,6 +37,7 @@ def main():
             else:
                 finalExpression = finalExpression + "{}".format(lValues[i])
 
+        approximateEquation = simplify(finalExpression)
         finalExpression = lambdify(Symbol('x'), parse_expr(finalExpression))
         
         xValues = []
@@ -44,11 +48,18 @@ def main():
             xValues.append(points[i][0])
             yValues.append(points[i][1])
             predictedValues.append(finalExpression(points[i][0]))
-        
+
+        outputFile = open("result.txt", "a")
+        outputFile.write("---------------Problem Nº {}-------------------\n".format(lineIndex+1))
+        outputFile.write("Approximate equation found: Y = {}".format(approximateEquation))
+        outputFile.write("\n\n")
+        outputFile.close()
+
         if len(predictedValues) > 3:
             newXValues = np.linspace(min(xValues), max(xValues), 200)
             spline = make_interp_spline(xValues, predictedValues, k=3)
             smoothYValues = spline(newXValues)
+
 
             plt.scatter(xValues, yValues)
             plt.plot(newXValues, smoothYValues, color='blue')
