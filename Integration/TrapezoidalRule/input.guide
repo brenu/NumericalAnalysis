@@ -1,0 +1,15 @@
+[*] Each line of it consists of an expression to integrate (it has to follow python syntax):
+
+x**2+2*x+1
+
+[*] The initial and final values of X:
+
+e.g.: 1;2
+
+[*] And also the number of trapezoids (the more you choose, the more precise it will be):
+
+e.g.: 10
+
+[*] ----- INPUT EXAMPLE -----
+
+exp(-x**2);1;3;4
