@@ -1,0 +1,11 @@
+[*] Each line of it consists of an expression to integrate (it has to follow python syntax):
+
+x**2+2*x+1
+
+[*] And initial and final values of X:
+
+e.g.: 1;2
+
+[*] ----- INPUT EXAMPLE -----
+
+exp(-x**2);1;3
