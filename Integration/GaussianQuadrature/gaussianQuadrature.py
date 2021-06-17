@@ -27,7 +27,7 @@ def main():
         outputFile = open("result.txt", "a")
         outputFile.write("---------------Problem Nº {}-------------------\n".format(lineIndex+1))
         outputFile.write("Calculating the integral of {} between {} and {}:\n".format(originalExpression, aValue, bValue))
-        outputFile.write("Approximate value found for 1,2 and 4 segments: {}\n".format(result))
+        outputFile.write("Approximate value found using 6 points: {}\n".format(result))
         outputFile.write("\n\n")
         outputFile.close()
 
