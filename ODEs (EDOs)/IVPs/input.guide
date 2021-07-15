@@ -1,0 +1,15 @@
+[*] Each line of it consists of a derivative equation (it has to follow python syntax):
+
+-y+x+2
+
+[*] Followed by the initial Y value (for x0):
+
+e.g.: 2
+
+[*] And also the values of x0, x1 and H (sepparated by semicolon)
+
+e.g.: 0;0.3;0.1
+
+[*] ----- INPUT EXAMPLE -----
+
+-y+x+2;2;0;0.3;0.1
