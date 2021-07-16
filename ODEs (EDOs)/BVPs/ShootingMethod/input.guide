@@ -1,0 +1,27 @@
+[*] Each line of it consists of a derivative equation (it has to follow python syntax):
+
+(73.4523*exp(0.1*x))-(53.4523*exp(-0.1*x))+(20)
+
+[*] Followed by the x0:
+
+e.g.: 0
+
+[*] Followed by the L value:
+
+e.g.: 10
+
+[*] Followed by the TA, T1 and T2 values (sepparated by semicolon):
+
+e.g.: 20;40;200
+
+[*] Followed by your h' desired value:
+
+e.g.: 0.01
+
+[*] Followed by your two different guesses for Z(0) (sepparated by semicolon):
+
+10;20
+
+[*] ----- INPUT EXAMPLE -----
+
+(73.4523*exp(0.1*x))-(53.4523*exp(-0.1*x))+(20);0.0;10;20;40;200;0.01;10;20
