@@ -23,31 +23,50 @@ def main():
         firstGuess = float(line[7])
         secondGuess = float(line[8])
         
-        h = l / 5000 # Dividindo em 5 mil pontos
+        h = l / 12 # Dividindo em 5 mil pontos
 
         f1 = lambdify((x,y,z),"z")
         
         f2 = lambdify((x,y,z),"{} * (y - {})".format(hLine,tA))
         
         values = [[0, t1]]
-        
-        zValue = firstGuess
+        zValues = [[0,firstGuess]]
 
         for xIndex, xValue in enumerate(np.arange(x0+h, l+h/2, h)):
-            yValue = values[xIndex][1] + (h * f1(xValue,values[xIndex][1],zValue))
-            zValue = zValue + (h*f2(xValue,values[xIndex][1],zValue))
+            k1 = h*f1(xValue,values[xIndex][1],zValues[xIndex][1])
+            l1 = h*f2(xValue,values[xIndex][1],zValues[xIndex][1])
+            k2 = h*f1(xValue+h/2,values[xIndex][1]+k1/2,zValues[xIndex][1]+l1/2)
+            l2 = h*f2(xValue+h/2,values[xIndex][1]+k1/2,zValues[xIndex][1]+l1/2)
+            k3 = h*f1(xValue+h/2,values[xIndex][1]+k2/2,zValues[xIndex][1]+l2/2)
+            l3 = h*f2(xValue+h/2,values[xIndex][1]+k2/2,zValues[xIndex][1]+l2/2)
+            k4 = h*f1(xValue+h,values[xIndex][1]+k3,zValues[xIndex][1]+l3)
+            l4 = h*f2(xValue+h,values[xIndex][1]+k3,zValues[xIndex][1]+l3)
 
-            values.append([xValue, yValue])
+            yN = values[xIndex][1]+(k1+2*k2+2*k3+k4)/6
+            zN = zValues[xIndex][1]+(l1+2*l2+2*l3+l4)/6
+
+            values.append([xValue, yN])
+            zValues.append([xValue, zN])
 
         firstResponse = values[-1][1]
         values = [[0, t1]]
-        zValue = secondGuess
+        zValues = [[0,secondGuess]]
 
         for xIndex, xValue in enumerate(np.arange(x0+h, l+h/2, h)):
-            yValue = values[xIndex][1] + (h * f1(xValue,values[xIndex][1],zValue))
-            zValue = zValue + (h*f2(xValue,values[xIndex][1],zValue))
+            k1 = h*f1(xValue,values[xIndex][1],zValues[xIndex][1])
+            l1 = h*f2(xValue,values[xIndex][1],zValues[xIndex][1])
+            k2 = h*f1(xValue+h/2,values[xIndex][1]+k1/2,zValues[xIndex][1]+l1/2)
+            l2 = h*f2(xValue+h/2,values[xIndex][1]+k1/2,zValues[xIndex][1]+l1/2)
+            k3 = h*f1(xValue+h/2,values[xIndex][1]+k2/2,zValues[xIndex][1]+l2/2)
+            l3 = h*f2(xValue+h/2,values[xIndex][1]+k2/2,zValues[xIndex][1]+l2/2)
+            k4 = h*f1(xValue+h,values[xIndex][1]+k3,zValues[xIndex][1]+l3)
+            l4 = h*f2(xValue+h,values[xIndex][1]+k3,zValues[xIndex][1]+l3)
 
-            values.append([xValue, yValue])
+            yN = values[xIndex][1]+(k1+2*k2+2*k3+k4)/6
+            zN = zValues[xIndex][1]+(l1+2*l2+2*l3+l4)/6
+
+            values.append([xValue, yN])
+            zValues.append([xValue, zN])
 
         secondResponse = values[-1][1]
 
@@ -60,18 +79,29 @@ def main():
         outputFile.write("\n\n")
         outputFile.close()
 
-        zValue = z0
+        zValues = [[0, z0]]
         values = [[0, t1]]
         xValues = []
         yValues = []
 
         for xIndex, xValue in enumerate(np.arange(x0+h, l+h/2, h)):
-            yValue = values[xIndex][1] + (h * f1(xValue,values[xIndex][1],zValue))
-            zValue = zValue + (h*f2(xValue,values[xIndex][1],zValue))
+            k1 = h*f1(xValue,values[xIndex][1],zValues[xIndex][1])
+            l1 = h*f2(xValue,values[xIndex][1],zValues[xIndex][1])
+            k2 = h*f1(xValue+h/2,values[xIndex][1]+k1/2,zValues[xIndex][1]+l1/2)
+            l2 = h*f2(xValue+h/2,values[xIndex][1]+k1/2,zValues[xIndex][1]+l1/2)
+            k3 = h*f1(xValue+h/2,values[xIndex][1]+k2/2,zValues[xIndex][1]+l2/2)
+            l3 = h*f2(xValue+h/2,values[xIndex][1]+k2/2,zValues[xIndex][1]+l2/2)
+            k4 = h*f1(xValue+h,values[xIndex][1]+k3,zValues[xIndex][1]+l3)
+            l4 = h*f2(xValue+h,values[xIndex][1]+k3,zValues[xIndex][1]+l3)
 
-            values.append([xValue,yValue])
+            yN = values[xIndex][1]+(k1+2*k2+2*k3+k4)/6
+            zN = zValues[xIndex][1]+(l1+2*l2+2*l3+l4)/6
+
+            values.append([xValue,yN])
+            zValues.append([xValue, zN])
+
             xValues.append(xValue)
-            yValues.append(yValue)
+            yValues.append(yN)
 
         plt.scatter([l], [t2], color='orange')
         plt.plot(xValues, yValues, color='blue')
